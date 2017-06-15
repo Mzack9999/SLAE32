@@ -1,4 +1,4 @@
-# H1 SLAE Assignment #1
+# SLAE Assignment #1
 
 This blog post has been created for completing the requirements of the SecurityTube Linux Assembly Expert certification:
 
@@ -6,7 +6,11 @@ hLp://securitytube-training.com/online‐courses/securitytube-linux-assembly-exp
 
 Student ID: SLAE-935
 
-## H2 Assignment
+## Resources
+
+* https://packetstormsecurity.com/files/11058/bindshell.c.html
+
+## Assignment
 
 Create a Shell_Bind_TCP shellcode
 
@@ -14,16 +18,20 @@ Create a Shell_Bind_TCP shellcode
 * Execute shell on incoming connections
 * Port number should be easily configurable
 
-## H2 Resources:
+## C prototype code:
 
-## H2 C prototype code:
+To better understand how the tcp bind shellcode works, the following C implementation has been created (comments are in the code):
 
-## H2 Assembler Code:
+```c
 
-## H2 Script for shellcode Customization:
+```
 
-## H2 Final wrapped shellcode:
+## Assembler Code:
 
-## H2 Proof of execution
+## Script for shellcode Customization:
+
+## Final wrapped shellcode:
+
+## Proof of execution
 
 
