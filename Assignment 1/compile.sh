@@ -12,3 +12,7 @@ echo '[+] Done!'
 echo '######### GCC #########'
 echo '[+] Assembling with Gcc ... '
 gcc $1.c -o $1.c_bin
+
+echo
+echo '*** Checking for null terminators'
+objdump -d $1 -M intel
