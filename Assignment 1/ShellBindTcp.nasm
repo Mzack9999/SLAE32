@@ -53,7 +53,7 @@ _start:
 
     ; Reverse pushing
     push 0 ; htonl(INADDR_ANY)
-    push WORD 0x0D05 ; htons(3333) -> word = 2bytes
+    push WORD 0x050d ; htons(3333) -> word = 2bytes
     push WORD 2 ; AF_INET -> word = 2bytes
 
     mov ecx, esp ; pointer to struct sockaddr_in serv_addr

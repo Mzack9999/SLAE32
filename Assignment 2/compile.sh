@@ -14,3 +14,7 @@ echo '[+] Done!'
 echo '[+] Linking ...'
 ld -z execstack -o $1 $1.o
 echo '[+] Done!'
+
+echo '[+] Checking for null bytes ...'
+objdump -d $1 -M intel
+echo '[+] Done!'
