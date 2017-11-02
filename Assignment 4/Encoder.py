@@ -13,26 +13,25 @@ encoded2 = ""
 current_segment_encoded = ""
 current_segment_encoded2 = ""
 
-segment_key = "segment_key" # todo: asm
+current_segment_key = 0x01 # todo: asm
 segment_jump_back_stub = "jump_back_stub" # todo: asm
 
 print 'Encoded shellcode ...'
 
 for x in bytearray(shellcode):
     if len(bytearray(current_segment_encoded)) == segment_size: # Todo: handle 8bytes padding
-        current_segment_encoded += segment_key + segment_jump_back_stub
-        current_segment_encoded2 += segment_key + segment_jump_back_stub
+        current_segment_encoded += '%02x' % current_segment_key + segment_jump_back_stub
+        current_segment_encoded2 += '%02x' % current_segment_key + segment_jump_back_stub
         encoded += current_segment_encoded
         encoded2 += current_segment_encoded2
         current_segment_encoded = current_segment_encoded2 = ""
+        current_segment_key += 1
     else:
         current_segment_encoded += '\\x'
         current_segment_encoded += '%02x' % x
-        #current_segment_encoded += '\\x%02x' % 0xAA # insertion stub
         
         current_segment_encoded2 += '0x'
         current_segment_encoded2 += '%02x,' %x
-        #current_segment_encoded2 += '0x%02x,' % 0xAA # insertion stub
 
 print encoded
 print encoded2
