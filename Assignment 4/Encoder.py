@@ -14,14 +14,14 @@ current_segment_encoded = ""
 current_segment_encoded2 = ""
 
 current_segment_key = 0x01 # todo: asm
-segment_jump_back_stub = "jump_to_decode_stub" # todo: asm
+segment_jump_back_stub = 0xC3 # RET (pops latest 4bytes from the stack and put them in EIP returning to get_pc)
 
 print 'Encoded shellcode ...'
 
 for x in bytearray(shellcode):
     if len(bytearray(current_segment_encoded)) == segment_size: # Todo: handle 8bytes padding
-        current_segment_encoded += '\\x%02x' % current_segment_key + segment_jump_back_stub
-        current_segment_encoded2 += '\\x%02x' % current_segment_key + segment_jump_back_stub
+        current_segment_encoded += '\\x%02x' % current_segment_key + '\\x%02x' % segment_jump_back_stub
+        current_segment_encoded2 += '0x%02x,' % current_segment_key + '0x%02x,' % segment_jump_back_stub
         encoded += current_segment_encoded
         encoded2 += current_segment_encoded2
         current_segment_encoded = current_segment_encoded2 = ""

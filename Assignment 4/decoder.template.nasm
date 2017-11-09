@@ -16,7 +16,8 @@ _start:
     push edx
     pop edx ; begin for loop
     pop ebx
-    jmp short get_pc ; getPC
+get_pc:
+    jmp short call_get_pc ; getPC
     pop edi ; edi=buff addr
     xor ecx,ecx
     cmp edx,ecx
@@ -50,8 +51,7 @@ decode_loop:
     inc edx ; i++
     push edx ; store for next loop
     jmp EncodedShellcode ; call decoded buffer
-
-get_pc:
-    call 0xd
+call_get_pc:
+    call get_pc
 
 EncodedShellcode: db 0xaa,0xaa,0xaa,0xaa,0xaa,0xaa,0xaa,0xaa,x01jump_to_decode_stub,0xaa,0xaa,0xaa,0xaa,0xaa,0xaa,0xaa,0xaa,x02jump_to_decode_stub
