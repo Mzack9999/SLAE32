@@ -1,7 +1,7 @@
 ; Filename: ReverseShellTcp.nasm
 ; Author:  SLAE-935
 ;
-; Purpose: spawn /bin/sh on reverse connect
+; Purpose: spawn /bin/sh on reverse connect (null free)
 
 global _start			
 

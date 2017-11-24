@@ -1,3 +1,8 @@
+// Filename: EggHunter.nasm
+// Author:  SLAE-935
+// 
+// Purpose: execute through egg-hunter routine the shellcode of ShellBindTcp
+
 #include<stdio.h>
 #include<string.h>
  

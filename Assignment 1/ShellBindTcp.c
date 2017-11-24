@@ -1,3 +1,8 @@
+// Filename: ShellBindTcp.c
+// Author:  SLAE-935
+//
+// Purpose: spawn /bin/sh on tcp port handling multiple connections
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <strings.h>
